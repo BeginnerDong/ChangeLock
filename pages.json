@@ -1,0 +1,150 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+        {
+            "path" : "pages/login/login",
+            "style" : {
+				"navigationBarTitleText": "登录"
+			}
+        }
+        ,{
+            "path" : "pages/invitation/invitation",
+            "style" : {
+				"navigationBarTitleText": "填写邀请码"
+			}
+        }
+        ,{
+            "path" : "pages/userInfo/userInfo",
+            "style" : {
+				"navigationBarTitleText": "个人信息"
+			}
+        },
+		{
+			"path": "pages/shopIndex/shopIndex",
+			"style": {
+				"navigationBarTitleText": "在线商城"
+			}
+		}
+        ,{
+            "path" : "pages/classify/classify",
+            "style" : {
+				"navigationBarTitleText": "分类商城"
+			}
+        }
+        ,{
+            "path" : "pages/detail/detail",
+            "style" : {
+				"navigationBarTitleText": "详情"
+			}
+        }
+        ,{
+            "path" : "pages/submitOrder/submitOrder",
+            "style" : {
+				"navigationBarTitleText": "提交订单"
+			}
+        }
+        ,{
+            "path" : "pages/coupon/coupon",
+            "style" : {
+				"navigationBarTitleText": ""
+			}
+        }
+        ,{
+            "path" : "pages/address/address",
+            "style" : {
+				"navigationBarTitleText": "地址管理"
+			}
+        }
+        ,{
+            "path" : "pages/addAddress/addAddress",
+            "style" : {
+				"navigationBarTitleText": "编辑地址"
+			}
+        }
+        ,{
+            "path" : "pages/public/public",
+            "style" : {
+				"navigationBarTitleText": "发布任务"
+			}
+        }
+        ,{
+            "path" : "pages/user/user",
+            "style" : {
+				"navigationBarTitleText": "我的"
+			}
+        }
+        ,{
+            "path" : "pages/couponList/couponList",
+            "style" : {
+				"navigationBarTitleText": "优惠券"
+			}
+        }
+        ,{
+            "path" : "pages/userTask/userTask",
+            "style" : {
+				"navigationBarTitleText": "我的任务"
+			}
+        }
+        ,{
+            "path" : "pages/userOrder/userOrder",
+            "style" : {
+				"navigationBarTitleText": "我的订单"
+			}
+        }
+        ,{
+            "path" : "pages/extension/extension",
+            "style" : {
+				"navigationBarTitleText": "我的推广"
+			}
+        }
+        ,{
+            "path" : "pages/extensionCode/extensionCode",
+            "style" : {
+				"navigationBarTitleText": "我的推广"
+			}
+        }
+        ,{
+            "path" : "pages/withDrawal/withDrawal",
+            "style" : {
+				"navigationBarTitleText": "提现申请"
+			}
+        }
+        ,{
+            "path" : "pages/bank/bank",
+            "style" : {
+				"navigationBarTitleText": "银行卡"
+			}
+        }
+        ,{
+            "path" : "pages/contact/contact",
+            "style" : {
+				"navigationBarTitleText": "联系方式"
+			}
+        }
+        ,{
+            "path" : "pages/aboutUs/aboutUs",
+            "style" : {
+				"navigationBarTitleText": "关于我们"
+			}
+        }
+        ,{
+            "path" : "pages/orderDetail/orderDetail",
+            "style" : {
+				"navigationBarTitleText": "订单详情"
+			}
+        }
+    ],
+	"globalStyle": {
+		"navigationStyle":"custom",
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#FFFFFF"
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "", //模式名称
+			"path": "", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	}
+}
