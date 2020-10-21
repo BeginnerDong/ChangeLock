@@ -2,35 +2,35 @@
 	<view>
 		
 		<view class="bg-white px-3 py-4 mb-2 flex">
-			<image src="../../static/images/my-img.png" class="wh110 radius-5"></image>
-			<view class="font-32 pl-2 font-w">淡定的毛豆</view>
+			<image :src="mainData.headImgUrl?mainData.headImgUrl:'../../static/images/headImg.png'" class="wh110 radius-5"></image>
+			<view class="font-32 pl-2 font-w">{{mainData.nickname?mainData.nickname:'用户'+mainData.user_no}}</view>
 		</view>
 		
 		<view class="bg-white px-3 py-4 mb-2">
 			<view class="flex"
-			@click="Router.navigateTo({route:{path:'/pages/userOrder/userOrder?type=0'}})">
+			@click="Router.navigateTo({route:{path:'/pages/userOrder/userOrder?index=0'}})">
 				<view class="font-32 font-w flex-1">我的订单</view>
 				<view class="font-26 color8">全部订单</view>
 				<image src="../../static/images/release-icon1.png" class="R-icon ml-1"></image>
 			</view>
 			<view class="d-flex j-sa a-end pt-4 font-26 line-h">
 				<view class="flex4"
-				@click="Router.navigateTo({route:{path:'/pages/userOrder/userOrder?type=0'}})">
+				@click="Router.navigateTo({route:{path:'/pages/userOrder/userOrder?index=0'}})">
 					<image src="../../static/images/my-icon3.png" class="icon1"></image>
 					<view class="pt-2">全部</view>
 				</view>
 				<view class="flex4"
-				@click="Router.navigateTo({route:{path:'/pages/userOrder/userOrder?type=1'}})">
+				@click="Router.navigateTo({route:{path:'/pages/userOrder/userOrder?index=1'}})">
 					<image src="../../static/images/my-icon.png" class="icon2"></image>
 					<view class="pt-2">待发货</view>
 				</view>
 				<view class="flex4"
-				@click="Router.navigateTo({route:{path:'/pages/userOrder/userOrder?type=2'}})">
+				@click="Router.navigateTo({route:{path:'/pages/userOrder/userOrder?index=2'}})">
 					<image src="../../static/images/my-icon1.png" class="icon3"></image>
 					<view class="pt-2">待收货</view>
 				</view>
 				<view class="flex4"
-				@click="Router.navigateTo({route:{path:'/pages/userTask/userTask?type=3'}})">
+				@click="Router.navigateTo({route:{path:'/pages/userTask/userTask?index=3'}})">
 					<image src="../../static/images/my-icon2.png" class="icon4"></image>
 					<view class="pt-2">已完成</view>
 				</view>
@@ -86,7 +86,7 @@
 		<view style="height: 120rpx;"></view>
 		<!-- footer -->
 		<view class="footer bT-f5">
-			<view class="item" @click="Router.redirectTo({route:{path:'/pages/index/index'}})">
+			<view class="item" @click="Router.redirectTo({route:{path:'/pages/shopIndex/shopIndex'}})">
 				<image src="../../static/images/nabar1.png" mode=""></image>
 				<view>首页</view>
 			</view>
@@ -107,10 +107,47 @@
 	export default {
 		data() {
 			return {
-				Router:this.$Router
+				Router:this.$Router,
+				mainData:{}
 			}
 		},
+		onLoad() {
+			const self = this;
+			
+			self.$Utils.loadAll(['getUserData'], self);
+		},
 		methods: {
+			
+			
+			getUserData() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.getAfter = {
+					parent:{
+						tableName:'Distribution',
+						middleKey:'user_no',
+						key:'child_no',
+						searchItem:{status:1},
+						condition:'='
+					}
+				};
+				const callback = (res) => {
+					if (res.solely_code == 100000) {
+						self.mainData = res.info.data[0];
+						if(uni.getStorageSync('shareUser')&&self.mainData.parent.length==0){
+							self.Router.redirectTo({route:{path:'/pages/invitation/invitation?user_no='+uni.getStorageSync('shareUser')}})
+							return
+						};
+						if(self.mainData.info.phone==''){
+							self.Router.redirectTo({route:{path:'/pages/userInfo/userInfo'}})
+							return
+						}
+					};
+					self.$Utils.finishFunc('getUserData');
+				};
+				self.$apis.userGet(postData, callback);
+			},
 			
 		}
 	}

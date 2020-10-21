@@ -1,5 +1,12 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/shopIndex/shopIndex",
+			"style": {
+				"navigationBarTitleText": "在线商城"
+			}
+		}
+		,
         {
             "path" : "pages/login/login",
             "style" : {
@@ -19,12 +26,6 @@
 			}
         },
 		{
-			"path": "pages/shopIndex/shopIndex",
-			"style": {
-				"navigationBarTitleText": "在线商城"
-			}
-		}
-        ,{
             "path" : "pages/classify/classify",
             "style" : {
 				"navigationBarTitleText": "分类商城"
@@ -45,9 +46,15 @@
         ,{
             "path" : "pages/coupon/coupon",
             "style" : {
-				"navigationBarTitleText": ""
+				"navigationBarTitleText": "领取优惠券"
 			}
         }
+		,{
+		    "path" : "pages/useCoupon/useCoupon",
+		    "style" : {
+				"navigationBarTitleText": "可用优惠券"
+			}
+		}
         ,{
             "path" : "pages/address/address",
             "style" : {
@@ -99,9 +106,15 @@
         ,{
             "path" : "pages/extensionCode/extensionCode",
             "style" : {
-				"navigationBarTitleText": "我的推广"
+				"navigationBarTitleText": "邀请好友"
 			}
         }
+		,{
+		    "path" : "pages/staffCode/staffCode",
+		    "style" : {
+				"navigationBarTitleText": "我要推广"
+			}
+		}
         ,{
             "path" : "pages/withDrawal/withDrawal",
             "style" : {

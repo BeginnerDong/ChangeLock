@@ -317,10 +317,10 @@ export default {
 		http.HTTP(allParams);
 	},
 
-	shopLogin(param, callback) {
+	loginByStaff(param, callback) {
 
 		var allParams = {
-			url: 'Func/Common/loginByShop',
+			url: 'Func/Common/loginByStaff',
 			type: 'post',
 			data: param,
 			sCallback: function(data) {
@@ -405,6 +405,30 @@ export default {
 	userCouponGet(param, callback) {
 		var allParams = {
 			url: 'Common/UserCoupon/get',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	couponAdd(param, callback) {
+		var allParams = {
+			url: 'Func/Coupon/addCoupon',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
+	
+	couponGet(param, callback) {
+		var allParams = {
+			url: 'Common/Coupon/get',
 			type: 'post',
 			data: param,
 			sCallback: function(data) {
@@ -527,6 +551,17 @@ export default {
 		http.HTTP(allParams);
 	},
 	
+	distriAdd(param, callback) {
+		var allParams = {
+			url: 'Common/Distribution/add',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
 	
 	addVirtualOrder(param, callback) {
 		var allParams = {

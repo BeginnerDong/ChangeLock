@@ -2,14 +2,58 @@ import assetsConfig from "@/config/assets.config.js";
 
 export default {
 	
+	timeto(date, type) {
+		var seperator1 = "-";
+		var seperator2 = ":";
+		var date = parseInt(date);
 	
+	
+		var date = new Date(date);
+		console.log('date',date)
+		var month = date.getMonth() + 1;
+		var strDate = date.getDate();
+		var hour = date.getHours();
+		var min = date.getMinutes();
+		var sec = date.getSeconds();
+		if (month >= 1 && month <= 9) {
+			month = "0" + month;
+		}
+		if (strDate >= 0 && strDate <= 9) {
+			strDate = "0" + strDate;
+		}
+		if (hour >= 0 && hour <= 9) {
+			hour = "0" + hour;
+		}
+		if (min >= 0 && min <= 9) {
+			min = "0" + min;
+		}
+		if (sec >= 0 && sec <= 9) {
+			sec = "0" + sec;
+		}
+		if (type == "ym") {
+			// 转年月
+			var currentdate = date.getFullYear() + seperator1 + month;
+		} else if (type == "ymd") {
+			// 转年月日
+			var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+		} else if (type == "ymd-hms") {
+			//转年月日 时分秒
+			var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+				" " + date.getHours() + seperator2 + date.getMinutes() +
+				seperator2 + date.getSeconds();
+		} else if (type == "hms") {
+			//转时分秒
+			var currentdate = date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+		}
+		return currentdate;
+	},
 
 	realPay(param, callback) {
 	
 		function onBridgeReady(param) {
 			WeixinJSBridge.invoke(
 				'getBrandWCPayRequest', {
-					"appId": "wx7db54ed176405e24", //公众号名称，由商户传入     
+					"appId": "wxf4aee96cc50407a8", //公众号名称，由商户传入     
 					'timeStamp': param.timeStamp,
 					'nonceStr': param.nonceStr,
 					'package': param.package,

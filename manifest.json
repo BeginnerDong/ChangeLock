@@ -71,8 +71,8 @@
             "https" : false
         },
         "router" : {
-            "base" : "/wx/"
+            "base" : "/126/"
         },
-        "domain" : "https://www.local-scanner.com"
+        "domain" : "https://test.solelyfinance.com"
     }
 }
