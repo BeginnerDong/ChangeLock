@@ -1,6 +1,53 @@
 import assetsConfig from "@/config/assets.config.js";
-
+import token from '@/common/token.js';
+var QQMapWX = require('./qqmap-wx-jssdk.min.js');
+var wxMap = new QQMapWX({
+	key: '4BEBZ-ZM43U-U6SVY-BZ5X3-44T35-4ZFD6' // 必填
+});
 export default {
+	
+	getLocation(type, callback) {
+		uni.getLocation({
+		  type: 'gcj02',
+		  success: function (res) {
+		    var latitude = res.latitude
+		    var longitude = res.longitude
+		    
+		    if(type=='getGeocoder'){
+		        callback&&callback(res)
+		        return;
+		    };
+		    if(type=='reverseGeocoder'){
+		        wxMap.reverseGeocoder({
+		          location: {
+		            latitude: latitude,
+		            longitude: longitude
+		          },
+		          success: function (res) {
+		            callback&&callback(res.result)
+		          },
+		          fail(res){
+		            uni.showToast({
+		                title:'获取位置失败',
+		                icon:'none',
+		                duration:2000,
+		                mask:true,
+		            });
+		          }
+		        });  
+		    }
+		  },
+		  fail(res) {
+			  console.log(res)
+		    uni.showToast({
+		        title:'获取经纬度失败',
+		        icon:'none',
+		        duration:2000,
+		        mask:true,
+		    }); 
+		  }
+		})
+	},
 	
 	timeto(date, type) {
 		var seperator1 = "-";

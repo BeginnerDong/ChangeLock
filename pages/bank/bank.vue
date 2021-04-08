@@ -51,7 +51,7 @@
 				const postData = {};
 				postData.tokenFuncName = 'getStaffToken';
 				postData.searchItem = {
-					user_no:uni.getStorageSync('user_info').user_no
+					user_no:uni.getStorageSync('staff_info').user_no
 				};
 				postData.data = {};
 				postData.data = self.$Utils.cloneForm(self.submitData);

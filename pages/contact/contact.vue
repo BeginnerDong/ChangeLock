@@ -12,28 +12,31 @@
 				<view class="w100 flex0">
 					<image src="../../static/images/contact-icon1.png" class="icon1"></image>
 				</view>
-				<view class="pl-2">
+				<view class="pl-2" style="width: 68%;">
 					<view class="font-24 color6 pb-1">联系电话</view>
 					<view>{{mainData.phone?mainData.phone:''}}</view>
 				</view>
+				<view @click="phoneCall" class="btn50 Mgb colorf  shadowM font-26" style="font-size: 26rpx;padding: 0 10rpx;">一键拨号</view>
 			</view>
 			<view class="flex p-2 b-e1 mb-3">
 				<view class="w100 flex0">
 					<image src="../../static/images/contact-icon2.png" class="icon2"></image>
 				</view>
-				<view class="pl-2">
+				<view class="pl-2" style="width: 68%;">
 					<view class="font-24 color6 pb-1">客服微信</view>
 					<view>{{mainData.wechat?mainData.wechat:''}}</view>
 				</view>
+				<view @click="copy" class="btn50 Mgb colorf  shadowM font-26" style="font-size: 26rpx;padding: 0 10rpx;">一键复制</view>
 			</view>
 			<view class="flex p-2 b-e1">
 				<view class="w100 flex0">
 					<image src="../../static/images/contact-icon.png" class="icon1"></image>
 				</view>
-				<view class="pl-2">
+				<view class="pl-2" style="width: 68%;">
 					<view class="font-24 color6 pb-1">联系地址</view>
 					<view>{{mainData.address?mainData.address:''}}</view>
 				</view>
+				<view @click="map" class="btn50 Mgb colorf  shadowM font-26" style="font-size: 26rpx;padding: 0 10rpx;">一键导航</view>
 			</view>
 		</view>
 		
@@ -41,6 +44,7 @@
 </template>
 
 <script>
+	import icanH5Api from "../../js_sdk/ican-H5Api/ican-H5Api.js"
 	export default {
 		data() {
 			return {
@@ -58,6 +62,37 @@
 			self.$Utils.loadAll(['getMainData'], self);
 		},
 		methods: {
+			
+			phoneCall(){
+				const self = this;
+				uni.makePhoneCall({
+					phoneNumber:self.mainData.phone
+				})
+			},
+			
+			map(){
+				const self = this;
+				 uni.openLocation({
+					latitude: self.mainData.latitude ,
+					longitude: self.mainData.longitude ,
+					success: function () {
+						console.log('success');
+					}
+				});
+			},
+			
+			copy(){
+				const self = this;
+				uni.setClipboardData({
+					data:self.mainData.wechat,
+					success(res) {
+						console.log(res.data)
+						if(res.data){
+							self.$Utils.showToast('复制成功','none')
+						}
+					}
+				})
+			},
 			
 			getMainData() {
 				const self = this;

@@ -8,10 +8,10 @@
 				<image :src="QrData.url" class="ewm"></image>
 			</view>
 			<view style="height: 100rpx;"></view>
-			<view style="position: fixed;width: 89%;">
+			<!-- <view style="position: fixed;width: 89%;">
 				<view class="font-30 colorf text-c">邀请码</view>
 				<view class="font-50 colorf text-c">{{user_no}}</view>
-			</view>
+			</view> -->
 			
 		</view>
 		
@@ -28,7 +28,7 @@
 		},
 		onLoad(options) {
 			const self = this;
-			self.user_no = uni.getStorageSync('staff_info').user_no;
+			self.user_no = uni.getStorageSync('staff_info').passage1;
 			self.$Utils.loadAll(['getQrData'], self);
 		},
 		methods: {
@@ -37,8 +37,8 @@
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getStaffToken';
-				postData.param = 'https://test.solelyfinance.com/h5/?user_no=' + uni.getStorageSync('staff_user') +
-					'#/pages/shopIndex/shopIndex';
+				postData.param = 'http://www.zhimakuaikai.com/wx/?user_no=' + uni.getStorageSync('staff_info').passage1 +
+					'&type=staff#/pages/shopIndex/shopIndex';
 				postData.ext = 'png';
 				const callback = (res) => {
 					self.QrData = res.info;

@@ -41,7 +41,7 @@
 		</view>
 		
 		<view class="bg-white radius20 mx-3 mb-2 px-3 py-4 flex"
-		@click="Router.redirectTo({route:{path:'/pages/useCoupon/useCoupon'}})">
+		@click="Router.navigateTo({route:{path:'/pages/useCoupon/useCoupon'}})">
 			<view class="flex-1">优惠券</view>
 			<view class="font-26 colorR">{{couponData.id?'满'+couponData.condition+'减'+couponData.value:'选择优惠劵'}}</view>
 			<image src="../../static/images/release-icon1.png" class="R-icon ml-1"></image>
@@ -91,7 +91,8 @@
 					coupon:[]
 				},
 				Utils:this.$Utils,
-				distriData:{}
+				distriData:{},
+				couponData:{}
 			}
 		},
 		onLoad(options) {

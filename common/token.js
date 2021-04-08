@@ -108,10 +108,7 @@ class Token {
                 code:param.code,
             };
 			
-			if(param.user_no){
-				//postData.parent_no = param.parent_no
-				uni.setStorageSync('shareUser',param.user_no)
-			};
+			
 			
 			if(param.sub_appid&&param.sub_code){
 				postData.sub_appid = param.sub_appid;
@@ -129,6 +126,9 @@ class Token {
 					var time = parseInt(new Date().getTime()) + 3500000;
 					console.log('time',time)
 					uni.setStorageSync('token_expire_time',time)
+					if(res.is_new){
+						uni.setStorageSync('isNew',true)
+					};
                     callback&&callback();
                 }else{
                     alert('获取token失败')

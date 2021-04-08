@@ -99,7 +99,7 @@
 					if (res && res.solely_code == 100000) {
 						self.$Utils.showToast('领取成功', 'none')
 						setTimeout(function() {
-							self.$Router.redirectTo({route:{path:'/pages/userOrder/userOrder'}})
+							self.Router.redirectTo({route:{path:'/pages/shopIndex/shopIndex'}})
 						}, 1000);
 					} else {
 						self.$Utils.showToast(res.msg, 'none')

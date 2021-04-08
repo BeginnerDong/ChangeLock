@@ -29,7 +29,7 @@
 				const self = this;
 				const postData = {};
 				postData.tokenFuncName = 'getProjectToken';
-				postData.param = 'https://test.solelyfinance.com/126/?user_no='+uni.getStorageSync('user_info').user_no+'#/pages/shopIndex/shopIndex';
+				postData.param = 'http://www.zhimakuaikai.com/wx/?type=user#/pages/shopIndex/shopIndex';
 				postData.ext = 'png';
 				const callback = (res) => {
 					self.QrData = res.info;

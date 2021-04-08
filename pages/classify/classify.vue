@@ -34,7 +34,12 @@
 		},
 		onLoad(options) {
 			const self = this;
-			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
+			self.paginate =  {
+				count: 0,
+				currentPage: 1,
+				pagesize: 15,
+				is_page: true,
+			};
 			var options = self.$Utils.getHashParameters();
 			self.id = options[0].id;
 			self.searchItem.category_id = self.id;
@@ -67,7 +72,7 @@
 					thirdapp_id: 2,
 					type:3
 				};
-				postData.getBefore = {
+				/* postData.getBefore = {
 					parent:{
 						tableName:'Label',
 						middleKey:'parentid',
@@ -75,7 +80,7 @@
 						searchItem:{title:['in',['商品类别']]},
 						condition:'in'
 					}
-				};
+				}; */
 				postData.order = {
 					listorder:'desc'
 				};
@@ -95,7 +100,7 @@
 					self.paginate = {
 						count: 0,
 						currentPage: 1,
-						pagesize: 10,
+						pagesize: 15,
 						is_page: true,
 					}
 				};

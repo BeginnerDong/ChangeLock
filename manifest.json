@@ -71,8 +71,8 @@
             "https" : false
         },
         "router" : {
-            "base" : "/126/"
+            "base" : "/wx/"
         },
-        "domain" : "https://test.solelyfinance.com"
+        "domain" : "http://www.zhimakuaikai.com"
     }
 }

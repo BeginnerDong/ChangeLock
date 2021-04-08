@@ -45,7 +45,7 @@
 	export default {
 		data() {
 			return {
-				liCurr:0,
+				liCurr:-1,
 				mainData:[],
 				searchItem:{
 					level:1,
@@ -59,13 +59,14 @@
 		onLoad(options) {
 			const self = this;
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
-			if(options.index){
+			if(options.index||options.index==0){
 				self.index = options.index
 			}
 		},
 		onShow() {
 			const self = this;
-			if(self.index){
+			if(self.index||self.index==0){
+				console.log(23)
 				self.changeLi(self.index)
 			}else{
 				self.getMainData(true)

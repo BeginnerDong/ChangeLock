@@ -17,6 +17,19 @@ export default {
 		};
 		http.HTTP(allParams);
 	},
+	
+	getUserInfo(param, callback) {
+	
+		var allParams = {
+			url: 'Project/Solely/getUserInfo',
+			type: 'post',
+			data: param,
+			sCallback: function(data) {
+				callback && callback(data);
+			}
+		};
+		http.HTTP(allParams);
+	},
 
 	registerSuper(param, callback) {
 

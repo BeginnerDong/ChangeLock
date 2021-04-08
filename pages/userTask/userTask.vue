@@ -68,7 +68,8 @@
 				},
 				day:'',
 				night:'',
-				Utils:this.$Utils
+				Utils:this.$Utils,
+				distriData:{}
 			}
 		},
 		onLoad(options) {
@@ -117,6 +118,7 @@
 					id: self.mainData[index].id
 				};
 				postData.noLoading = true;
+				postData.payAfter = [];
 				if(JSON.stringify(self.distriData)!='{}'){
 					postData.payAfter.push(
 						{

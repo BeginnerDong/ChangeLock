@@ -70,14 +70,14 @@
 					<image src="../../static/images/release-icon1.png" class="R-icon"></image>
 				</view>
 			</view>
-			<view class="flex1"
+			<!-- <view class="flex1"
 			@click="Router.navigateTo({route:{path:'/pages/extensionCode/extensionCode'}})">
 				<image src="../../static/images/my-icon4.png" class="wh36 mr-2"></image>
 				<view class="py-4 flex-1 flex1">
 					<view>邀请好友</view>
 					<image src="../../static/images/release-icon1.png" class="R-icon"></image>
 				</view>
-			</view>
+			</view> -->
 		</view>
 		
 		

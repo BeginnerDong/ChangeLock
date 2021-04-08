@@ -14,7 +14,7 @@
 				<view class="font-70"><text class="font-30">￥</text>{{item.value}}</view>
 				
 				<!-- 优惠券可领可用展示 -->
-				<view class="p-1 p-a top-0 right-0">
+				<view class="p-1 p-a top-0 right-0" @click="choose(index)">
 					<image :src="item.id==id?'../../static/images/coupons-icon.png':'../../static/images/coupons-icon1.png'" class="wh48"></image>
 					<!-- <image src="../../static/images/coupons-icon1.png" class="wh48"></image> -->
 				</view>
@@ -45,7 +45,7 @@
 			
 			choose(index){
 				const self = this;
-				uni.setStorageSync('chooseCoupon',self.userCoponData[index].id);
+				uni.setStorageSync('chooseCoupon',self.mainData[index].id);
 				uni.navigateBack({
 					delta:1
 				})

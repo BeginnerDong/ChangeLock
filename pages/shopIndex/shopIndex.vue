@@ -1,6 +1,11 @@
 <template>
 	<view>
-		
+		<view class="bg-mask flex4 colorf" v-show="noFoucs">
+			<image src="../../static/images/topromote-img2.jpg" class="wh300"></image>
+			<view class="mt-2">推荐关注公众号，享更多福利</view>
+			<view>长按二维码识别关注</view>
+			<image @click="foucs"  src="../../static/images/close.png" class="wh70 mt-2"></image>
+		</view>
 		<!-- banner -->
 		<swiper class="swiper-box" indicator-dots="indicatorDots" autoplay="autoplay" interval="3000" indicator-active-color="#FAAA30">
 			<block v-for="(item,index) in sliderData" :key="index">
@@ -11,8 +16,8 @@
 		</swiper>
 		
 		<!-- 金刚区 -->
-		<view class="font-26 line-h flex py-4">
-			<view class="flex4 w-33" v-for = "(item,index) in labelData" :key="index"
+		<view class="font-26 line-h flexX py-4">
+			<view class="flex4 w-33 flex-shrink" v-for = "(item,index) in labelData" :key="index"
 			:data-id = "item.id"
 			@click="Router.navigateTo({route:{path:'/pages/classify/classify?id='+$event.currentTarget.dataset.id}})">
 				<image :src="item.mainImg&&item.mainImg[0]?item.mainImg[0].url:''" class="wh100 mb-2"></image>
@@ -39,7 +44,24 @@
 			</view>
 		</view>
 		
-		
+		<view class="bg-mask" v-show="isNew">
+			<view class="bg-white mx-1 radius10">
+				<view class="text-c colorR font-40 font-w pt-2" style="margin-top: 200rpx;">
+					新用户专享！
+				</view>
+				<view class="p-r px-4 mt-3 coupon pb-4" v-for="(item,index) in userCouponData" :key="index">
+					<image src="../../static/images/coupons-img.png" mode="widthFix"></image>
+					<view class="p-aXY px-8 pb-4 pt-0 colorf flex1 overflow-h">
+						<view class="b-f5 flex4 line-h txt">
+							<view class="font-34">满{{item.condition}}可用优惠券</view>
+							<view class="font-24 pt-3">有效期至：{{Utils.timeto(item.invalid_time,'ymd')}}</view>
+						</view>
+						<view class="font-70"><text class="font-30">￥</text>{{item.value}}</view>
+					</view>
+				</view>
+			</view>
+			<view class="btn80  colorf mt-4 mx-3 shadowM" style="background-color: #DD524D;" @click="addCoupon">立即领取</view>
+		</view>
 		
 		
 		<view style="height: 120rpx;"></view>
@@ -70,11 +92,17 @@
 				sliderData:[],
 				labelData:[],
 				mainData:[],
-				searchItem:{type:1,thirdapp_id:2}
+				searchItem:{type:1,thirdapp_id:2},
+				userCouponData:[],
+				isNew:false,
+				Utils:this.$Utils,
+				noFoucs:false
 			}
 		},
 		onLoad() {
 			const self = this;
+			self.param = self.$Utils.getHashParameters()[0];
+			
 			self.paginate = self.$Utils.cloneForm(self.$AssetsConfig.paginate);
 			self.$Utils.loadAll(['getSliderData','getLabelData','getMainData','getUserInfoData'], self);
 		},
@@ -87,6 +115,19 @@
 			};
 		},
 		methods: {
+			
+			foucs(){
+				const self = this;
+				self.noFoucs = !self.noFoucs
+			},
+			
+			addCoupon(){
+				const self = this;
+				uni.showLoading();
+				setTimeout(function() {
+					self.Router.navigateTo({route:{path:'/pages/useCoupon/useCoupon'}})
+				}, 1000);
+			},
 			
 			tokenGet() {
 				const self = this;
@@ -105,9 +146,10 @@
 						var time = parseInt(new Date().getTime()) + 3500000;
 						uni.setStorageSync('token_expire_time',time);
 						var param = self.$Utils.getHashParameters()[0];
-						
+						self.getUserInfo()
 					}
 					console.log('res', res)
+					//self.getUserCouponData()
 					self.$Utils.finishFunc('tokenGet');
 				};
 				self.$apis.tokenGet(postData, callback);
@@ -126,22 +168,57 @@
 						condition:'='
 					}
 				};
+				
 				console.log('postData', postData)
 				const callback = (res) => {
 					if (res.solely_code == 100000) {
 						self.userInfoData = res.info.data[0];
-						if(uni.getStorageSync('shareUser')&&self.userInfoData.parent.length==0){
-							self.Router.redirectTo({route:{path:'/pages/invitation/invitation?user_no='+uni.getStorageSync('shareUser')}})
+						if(self.param.type=='staff'&&self.userInfoData.parent.length==0){
+							self.Router.redirectTo({route:{path:'/pages/invitation/invitation'}})
 							return
 						};
 						if(self.userInfoData.phone==''){
 							self.Router.redirectTo({route:{path:'/pages/userInfo/userInfo'}})
 							return
 						}
+						//self.getUserCouponData()
+						
+						if(uni.getStorageSync('isNew')){
+							self.getUserCouponData();
+							uni.removeStorageSync('isNew')
+						}
+						self.getUserInfo()
 					};
 					self.$Utils.finishFunc('getUserInfoData');
 				};
 				self.$apis.userInfoGet(postData, callback);
+			},
+			
+			getUserInfo() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.openid = uni.getStorageSync('user_info').openid;
+				const callback = (res) => {
+					if(res.info.openid&&res.info.subscribe==0){
+						self.noFoucs = true
+					}
+				};
+				self.$apis.getUserInfo(postData, callback);
+			},
+			
+			getUserCouponData() {
+				const self = this;
+				const postData = {};
+				postData.tokenFuncName = 'getProjectToken';
+				postData.searchItem = {use_step:1}
+				const callback = (res) => {
+					if (res.info.data.length > 0) {
+						self.userCouponData = res.info.data
+						self.isNew = true
+					}
+				};
+				self.$apis.userCouponGet(postData, callback);
 			},
 			
 			getMainData(isNew) {
@@ -158,6 +235,9 @@
 				var postData = {};
 				postData.paginate = self.$Utils.cloneForm(self.paginate);
 				postData.searchItem = self.$Utils.cloneForm(self.searchItem);
+				postData.order = {
+					listorder:'desc'
+				};
 				var callback = function(res) {
 					if (res.info.data.length > 0) {
 						self.mainData.push.apply(self.mainData, res.info.data);
@@ -190,15 +270,7 @@
 					thirdapp_id: 2,
 					type:3
 				};
-				postData.getBefore = {
-					parent:{
-						tableName:'Label',
-						middleKey:'parentid',
-						key:'id',
-						searchItem:{title:['in',['商品类别']]},
-						condition:'in'
-					}
-				};
+				
 				postData.order = {
 					listorder:'desc'
 				};
@@ -220,4 +292,5 @@
 .img{width: 210rpx;height: 210rpx;border-radius: 10rpx;}
 .gird{margin-right: 31rpx;}
 .gird:nth-child(3n){margin-right: 0;}
+.px-8{padding-left: 80rpx;padding-right: 80rpx;}
 </style>

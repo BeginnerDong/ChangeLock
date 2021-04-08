@@ -92,7 +92,7 @@
 					self.$Utils.showToast('请填写身份证号', 'none')
 					return
 				};
-				if (self.submitData.phone.trim().length != 11 || /^[1][3,4,5,7,8,9][0-9]{9}$/.test(self.submitData.phone)) {
+				if (self.submitData.phone.trim().length != 11) {
 					uni.setStorageSync('canClick', true);
 					self.$Utils.showToast('请输入正确的手机号', 'none', 1000)
 					return;
